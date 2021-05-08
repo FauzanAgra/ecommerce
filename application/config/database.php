@@ -75,7 +75,7 @@ $query_builder = TRUE;
 
 $db['default'] = array(
 	'dsn'	=> '',
-	'hostname' => 'localhost',
+	'hostname' => 'localhost:2234',
 	'username' => 'deep_learning',
 	'password' => 'digital2019',
 	'database' => 'deep_learning',
