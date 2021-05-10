@@ -309,18 +309,36 @@
             </div>
             <div class="modal-body">
                 <div class="row">
-                    <div class="col-5">
-                        <div class="card">
-                            <div class="card-body">
-                                <div class="form-row">
-                                    <label for="">Nama Penerima</label>
-                                </div>
-                            </div>
-                        </div>
+                    <div class="col-6">
+                        <ul class="list-group">
+                            <li class="list-group-item d-flex justify-content-center align-items-center">
+                                <span class="font-weight-bold">Detail</span>
+                            </li>
+                            <li class="list-group-item d-flex justify-content-between align-items-center">
+                                <span class="font-weight-bold">No Resi</span>
+                                <span id="resi-awb">123456789</span>
+                            </li>
+                            <li class="list-group-item d-flex justify-content-between align-items-center">
+                                <span class="font-weight-bold">Penerima</span>
+                                <span id="resi-penerima">Fauzan Agra</span>
+                            </li>
+                            <li class="list-group-item d-flex justify-content-between align-items-center">
+                                <span class="font-weight-bold">Pengirim</span>
+                                <span id="resi-pengirim">DMTekno</span>
+                            </li>
+                            <li class="list-group-item d-flex justify-content-between align-items-center">
+                                <span class="font-weight-bold">Ekspedisi</span>
+                                <span id="resi-ekspedisi">JNE (REG)</span>
+                            </li>
+                            <li class="list-group-item d-flex justify-content-between align-items-center">
+                                <span class="font-weight-bold">Status</span>
+                                <span class="badge badge-success" id="resi-status">DELIVERED</span>
+                            </li>
+                        </ul>
                     </div>
-                    <div class="col-7">
-                        <ul class="timeline">
-                            <li>
+                    <div class="col-6">
+                        <ul class="timeline" id="resi-history">
+                            <!-- <li>
                                 <p class="font-weight-normal mb-0">TERKIRIM: DROP POINT [SUNGAI PENUH] (DITERIMA OLEH: MUHAMMAD LUTHFI ALHA)</p>
                                 <small class="font-weight-bold">2020-10-01 12:30:28</small>
                             </li>
@@ -343,7 +361,7 @@
                             <li>
                                 <p class="font-weight-normal mb-0">TELAH BERANGKAT: PUSAT TRANSIT [JAKARTA] MENUJU [JAMBI]</p>
                                 <small class="font-weight-bold">2020-09-29 09:54:45</small>
-                            </li>
+                            </li> -->
                         </ul>
                     </div>
                 </div>

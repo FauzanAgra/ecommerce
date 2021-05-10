@@ -189,62 +189,60 @@ class Dashboard_User extends MY_Controller
                     $ret->mesg = 'Pesanan telah di terima. Terima Kasih';
                 }
             } else if ($action == 'cek-resi') {
-                $id = $this->input->post('id');
-                $data = $this->db->get_where('transactions', array('trans_id' => $id))->row_array();
+                // $id = $this->input->post('id');
+                // $data = $this->db->get_where('transactions', array('trans_id' => $id))->row_array();
 
-                $awb = $data['trans_invoice'];
-                if ($data['trans_courier'] == 1) {
-                    $courier = 'jne';
-                } else if ($data['trans_courier'] == 2) {
-                    $courier = 'sicepat';
-                } else if ($data['trans_courier'] == 3) {
-                    $courier = 'tiki';
-                } else if ($data['trans_courier'] == 4) {
-                    $courier = 'jnt';
-                } else if ($data['trans_courier'] == 5) {
-                    $courier = 'anteraja';
-                }
+                // $awb = $data['trans_invoice'];
+                // if ($data['trans_courier'] == 1) {
+                //     $courier = 'jne';
+                // } else if ($data['trans_courier'] == 2) {
+                //     $courier = 'sicepat';
+                // } else if ($data['trans_courier'] == 3) {
+                //     $courier = 'tiki';
+                // } else if ($data['trans_courier'] == 4) {
+                //     $courier = 'jnt';
+                // } else if ($data['trans_courier'] == 5) {
+                //     $courier = 'anteraja';
+                // }
 
-                if (isset($courier) && isset($awb)) {
-                    //kolid66482@ffuqzt.com devel_dm12345 binderbyte.com
-                    $api = 'aae9df9a5af5dfa79f5dfe04d47b5cd550ec1e0e207ff51ecdbeeddc9e10bd37';
-                    // $courier = 'sicepat';
-                    // $awb = '000496381991';
-                    $curl = curl_init();
-                    curl_setopt_array($curl, array(
-                        CURLOPT_URL => 'https://api.binderbyte.com/v1/track?api_key=' . $api . '&courier=' . $courier . '&awb=' . $awb,
-                        CURLOPT_RETURNTRANSFER => true,
-                        CURLOPT_ENCODING => '',
-                        CURLOPT_MAXREDIRS => 10,
-                        CURLOPT_TIMEOUT => 0,
-                        CURLOPT_FOLLOWLOCATION => true,
-                        CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
-                        CURLOPT_CUSTOMREQUEST => 'GET',
-                    ));
+                // if (isset($courier) && isset($awb)) {
+                //kolid66482@ffuqzt.com devel_dm12345 binderbyte.com
+                $api = 'aae9df9a5af5dfa79f5dfe04d47b5cd550ec1e0e207ff51ecdbeeddc9e10bd37';
+                $courier = 'sicepat';
+                $awb = '000496381991';
+                $curl = curl_init();
+                curl_setopt_array($curl, array(
+                    CURLOPT_URL => 'https://api.binderbyte.com/v1/track?api_key=' . $api . '&courier=' . $courier . '&awb=' . $awb,
+                    CURLOPT_RETURNTRANSFER => true,
+                    CURLOPT_ENCODING => '',
+                    CURLOPT_MAXREDIRS => 10,
+                    CURLOPT_TIMEOUT => 0,
+                    CURLOPT_FOLLOWLOCATION => true,
+                    CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+                    CURLOPT_CUSTOMREQUEST => 'GET',
+                ));
 
-                    $response = curl_exec($curl);
-                    $raw = json_decode($response);
+                $response = curl_exec($curl);
+                $raw = json_decode($response);
 
-
-
-                    //Filtering Data
-                    if ($raw->status == '200') {
-                        $data = $raw->data;
-                        $datas = [
-                            'awb' => $data->summary->awb,
-                            'status' => $data->summary->status,
-                            'date' => $data->summary->date,
-                            'courier' => $data->summary->courier
+                //Filtering Data
+                if ($raw->status == '200') {
+                    $data = $raw->data;
+                    $datas = [
+                        'awb' => $data->summary->awb,
+                        'status' => $data->summary->status,
+                        'date' => $data->summary->date,
+                        'courier' => $data->summary->courier
+                    ];
+                    for ($x = 0; $x < count($data->history); $x++) {
+                        $datas['history'][$x] = [
+                            'date' => $data->history[$x]->date,
+                            'desc' => $data->history[$x]->desc,
+                            'location' => $data->history[$x]->location
                         ];
-                        for ($x = 0; $x < count($data->history); $x++) {
-                            $datas['history'][$x] = [
-                                'date' => $data->history[$x]->date,
-                                'desc' => $data->history[$x]->desc,
-                                'location' => $data->history[$x]->location
-                            ];
-                        }
                     }
                 }
+                // }
                 //Custom Data API
                 if ($datas) {
                     $ret->stat = 1;

@@ -220,7 +220,7 @@
                     'id': $(this).data('id'),
                     'action': 'cek-resi'
                 }
-                next = false;
+                next = true;
             }
 
             if (next) {
@@ -235,7 +235,23 @@
                     },
                     success: function(data) {
                         if (parseInt(data.stat) === 1) {
+                            var output = '';
+                            $.each(data.data.history, function(index, data) {
+                                output += `
+                                    <li>
+                                        <p class="font-weight-normal mb-0">` + data.desc + `</p>
+                                        <small class="font-weight-bold">` + data.date + `</small>
+                                    </li>
+                                    `;
+                            });
 
+                            $('#resi-awb').text(data.data.awb);
+                            $('#resi-penerima').text('Satrio Suryo');
+                            $('#resi-pengirim').text('DMTekno');
+                            $('#resi-ekspedisi').text(data.data.courier);
+                            $('#resi-stat').text(data.data.status);
+                            $('#resi-history').append(' ');
+                            $('#resi-history').append(output);
                         }
                     },
                     error: function(xhr, status, err) {
